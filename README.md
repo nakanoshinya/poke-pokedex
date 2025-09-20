@@ -8,15 +8,11 @@
 - Tailwind CSS v4（PostCSS プラグイン: @tailwindcss/postcss）
 
 ## ローカル環境構築手順
-```bash
 npm install
 npm run dev
 # http://localhost:3000
 開発中は WSL 環境の安定化のため、NEXT_USE_TURBOPACK=0 により Webpack dev を使用しています。
 
-本番ビルド
-bash
-コードをコピーする
 npm run build
 npm start
 機能
