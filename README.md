@@ -1,36 +1,43 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Kanto Pokédex (151) – Next.js × PokéAPI
 
-## Getting Started
+初代 151 匹のポケモンを PokéAPI から取得し、検索でフィルタ可能な一覧・詳細を表示します。
 
-First, run the development server:
+## 動作環境
+- Node.js 20+
+- Next.js 15 (App Router)
+- Tailwind CSS v4（PostCSS プラグイン: @tailwindcss/postcss）
 
+## ローカル環境構築手順
 ```bash
+npm install
 npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+# http://localhost:3000
+開発中は WSL 環境の安定化のため、NEXT_USE_TURBOPACK=0 により Webpack dev を使用しています。
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+本番ビルド
+bash
+コードをコピーする
+npm run build
+npm start
+機能
+一覧：初代 151 匹の名前と公式アートワーク画像を表示
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+検索：ページ上部の検索バーで部分一致（英名／番号 id）
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+詳細：/pokemon/{id or name} で id / name / height / weight / base_experience / types / abilities / stats をテーブル表示
 
-## Learn More
+一覧へ戻るリンクあり
 
-To learn more about Next.js, take a look at the following resources:
+レスポンシブ対応（2→6列グリッド）
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+技術メモ
+API: https://pokeapi.co/api/v2/pokemon?limit=151 を1回取得 → URL末尾から id 抽出 → 画像URL合成
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+画像最適化: next.config.mjs の images.remotePatterns に GitHub sprites を許可
 
-## Deploy on Vercel
+キャッシュ: fetch(..., { next: { revalidate: 86400 }}) による ISR
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+Next.js 15 仕様対応: 動的ルートの params は await で取得（{ params: Promise<...> }）
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+実装時間
+実装時間: 約 1.5 時間
