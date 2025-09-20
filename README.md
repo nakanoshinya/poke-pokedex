@@ -35,5 +35,4 @@ API: https://pokeapi.co/api/v2/pokemon?limit=151 を1回取得 → URL末尾か�
 
 Next.js 15 仕様対応: 動的ルートの params は await で取得（{ params: Promise<...> }）
 
-実装時間
 実装時間: 約 1.5 時間
